@@ -9,6 +9,36 @@ function App() {
     const [currentSection, setCurrentSection] = useState('home');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [pricingPlan, setPricingPlan] = useState('monthly');
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Check if device is mobile
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Close mobile menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (isMenuOpen && !event.target.closest('.nav-container')) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        if (isMenuOpen) {
+            document.addEventListener('click', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [isMenuOpen]);
 
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
@@ -24,8 +54,6 @@ function App() {
         window.open('https://web.telegram.org/k/#@trading_ajaib_bot', '_blank');
     };
 
-
-
     return (
         <div className="app">
             {/* Navigation */}
@@ -34,17 +62,17 @@ function App() {
                 onSectionChange={scrollToSection}
                 isMenuOpen={isMenuOpen}
                 setIsMenuOpen={setIsMenuOpen}
+                isMobile={isMobile}
             />
 
             {/* Hero Section */}
-            <HeroSection onGetStarted={() => scrollToSection('pricing')} />
+            <HeroSection onGetStarted={() => scrollToSection('pricing')} isMobile={isMobile} />
 
             {/* Features Section */}
             <FeaturesSection />
 
             {/* How It Works */}
             <HowItWorksSection />
-
 
             {/* Pricing Section */}
             <PricingSection 
@@ -61,16 +89,12 @@ function App() {
 
             {/* Footer */}
             <Footer />
-
-
-
-
         </div>
     );
 }
 
 // Navigation Component
-function Navigation({ currentSection, onSectionChange, isMenuOpen, setIsMenuOpen }) {
+function Navigation({ currentSection, onSectionChange, isMenuOpen, setIsMenuOpen, isMobile }) {
     const navItems = [
         { id: 'home', label: 'Home' },
         { id: 'features', label: 'Features' },
@@ -78,6 +102,19 @@ function Navigation({ currentSection, onSectionChange, isMenuOpen, setIsMenuOpen
         { id: 'pricing', label: 'Pricing' },
         { id: 'faq', label: 'FAQ' }
     ];
+
+    const handleMenuToggle = (e) => {
+        e.stopPropagation();
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const handleNavItemClick = (sectionId) => {
+        onSectionChange(sectionId);
+        // Add a small delay for mobile to ensure smooth transition
+        if (isMobile) {
+            setTimeout(() => setIsMenuOpen(false), 100);
+        }
+    };
 
     return (
         <nav className="navigation">
@@ -92,7 +129,7 @@ function Navigation({ currentSection, onSectionChange, isMenuOpen, setIsMenuOpen
                         <button
                             key={item.id}
                             className={`nav-item ${currentSection === item.id ? 'active' : ''}`}
-                            onClick={() => onSectionChange(item.id)}
+                            onClick={() => handleNavItemClick(item.id)}
                         >
                             {item.label}
                         </button>
@@ -100,12 +137,15 @@ function Navigation({ currentSection, onSectionChange, isMenuOpen, setIsMenuOpen
                 </div>
 
                 <div className="nav-actions">
-                    <button className="btn-secondary" onClick={() => onSectionChange('pricing')}>
-                        Get Started
-                    </button>
+                    {!isMobile && (
+                        <button className="btn-secondary" onClick={() => onSectionChange('pricing')}>
+                            Get Started
+                        </button>
+                    )}
                     <button 
                         className="nav-toggle"
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        onClick={handleMenuToggle}
+                        aria-label="Toggle navigation menu"
                     >
                         <span></span>
                         <span></span>
@@ -118,7 +158,7 @@ function Navigation({ currentSection, onSectionChange, isMenuOpen, setIsMenuOpen
 }
 
 // Hero Section
-function HeroSection({ onGetStarted }) {
+function HeroSection({ onGetStarted, isMobile }) {
     return (
         <section id="home" className="hero">
             <div className="hero-background">
@@ -128,7 +168,6 @@ function HeroSection({ onGetStarted }) {
             
             <div className="hero-content">
                 <div className="hero-text">
-              
                     <h1 className="hero-title">
                         <span className="gradient-text">Trading Genie</span>
                         <br />
@@ -140,14 +179,15 @@ function HeroSection({ onGetStarted }) {
                         powered by cutting-edge AI technology.
                     </p>
                     <div className="hero-actions">
-                        <button className="btn-primary" onClick={onGetStarted}>
+                        <button 
+                            className="btn-primary" 
+                            onClick={onGetStarted}
+                            style={{ touchAction: 'manipulation' }}
+                        >
                             <i className="fas fa-rocket"></i>
                             Start Free Trial
                         </button>
-                     
                     </div>
-                 
-                    
                 </div>
                 
                 <div className="hero-visual">
@@ -458,6 +498,10 @@ function PricingSection({ pricingPlan, setPricingPlan, onSubscribe }) {
         ]
     };
 
+    const handleToggle = () => {
+        setPricingPlan(pricingPlan === 'monthly' ? 'yearly' : 'monthly');
+    };
+
     return (
         <section id="pricing" className="pricing">
             <div className="container">
@@ -475,7 +519,9 @@ function PricingSection({ pricingPlan, setPricingPlan, onSubscribe }) {
                     <span className={pricingPlan === 'monthly' ? 'active' : ''}>Monthly</span>
                     <button 
                         className={`toggle-switch ${pricingPlan === 'yearly' ? 'active' : ''}`}
-                        onClick={() => setPricingPlan(pricingPlan === 'monthly' ? 'yearly' : 'monthly')}
+                        onClick={handleToggle}
+                        aria-label={`Switch to ${pricingPlan === 'monthly' ? 'yearly' : 'monthly'} billing`}
+                        style={{ touchAction: 'manipulation' }}
                     >
                         <div className="toggle-slider"></div>
                     </button>
@@ -514,6 +560,7 @@ function PricingSection({ pricingPlan, setPricingPlan, onSubscribe }) {
                             <button 
                                 className={`btn-primary ${plan.popular ? 'btn-popular' : ''}`}
                                 onClick={() => onSubscribe(plan)}
+                                style={{ touchAction: 'manipulation' }}
                             >
                                 Start Free Trial
                             </button>
@@ -612,6 +659,10 @@ function FAQSection() {
         }
     ];
 
+    const handleFAQToggle = (index) => {
+        setOpenFAQ(openFAQ === index ? null : index);
+    };
+
     return (
         <section id="faq" className="faq">
             <div className="container">
@@ -627,12 +678,18 @@ function FAQSection() {
                         <div key={index} className="faq-item">
                             <button 
                                 className={`faq-question ${openFAQ === index ? 'active' : ''}`}
-                                onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                                onClick={() => handleFAQToggle(index)}
+                                aria-expanded={openFAQ === index}
+                                aria-controls={`faq-answer-${index}`}
+                                style={{ touchAction: 'manipulation' }}
                             >
                                 {faq.question}
                                 <i className={`fas fa-chevron-${openFAQ === index ? 'up' : 'down'}`}></i>
                             </button>
-                            <div className={`faq-answer ${openFAQ === index ? 'active' : ''}`}>
+                            <div 
+                                className={`faq-answer ${openFAQ === index ? 'active' : ''}`}
+                                id={`faq-answer-${index}`}
+                            >
                                 {faq.answer}
                             </div>
                         </div>

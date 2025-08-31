@@ -1376,7 +1376,45 @@ section {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--spacing-xl);
+    }
+
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .pricing-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .bot-access-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+        text-align: center;
+    }
+
+    .steps-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+
+    .nav-container {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
     .nav-menu {
         position: fixed;
         top: 80px;
@@ -1388,48 +1426,200 @@ section {
         padding: var(--spacing-lg);
         transform: translateY(-100%);
         opacity: 0;
+        visibility: hidden;
         transition: all var(--transition-normal);
         border-bottom: 1px solid var(--border-secondary);
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
     }
 
     .nav-menu.active {
         transform: translateY(0);
         opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-item {
+        padding: var(--spacing-md);
+        width: 100%;
+        text-align: center;
+        border-radius: var(--radius-md);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+        background: var(--bg-glass);
+        border: 1px solid var(--border-primary);
     }
 
     .nav-toggle {
         display: flex;
     }
 
+    .nav-actions {
+        gap: var(--spacing-sm);
+    }
+
+    .nav-actions .btn-secondary {
+        display: none;
+    }
+
+    /* Hero Section Mobile Improvements */
+    .hero {
+        padding-top: 80px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: var(--spacing-xl);
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg) var(--spacing-md);
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .hero-text {
+        order: 1;
+    }
+
+    .hero-visual {
+        order: 2;
+        margin-top: var(--spacing-md);
     }
 
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        line-height: 1.3;
+        margin-bottom: var(--spacing-md);
+        word-wrap: break-word;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: var(--spacing-lg);
+        color: var(--text-secondary);
     }
 
     .hero-actions {
         justify-content: center;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin-bottom: 0;
+    }
+
+    .hero-actions .btn-primary {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 1.1rem;
+        min-height: 50px;
+    }
+
+    .trading-dashboard {
+        max-width: 320px;
+        margin: 0 auto;
+        padding: var(--spacing-md);
+        transform: scale(0.95);
+    }
+
+    .dashboard-header {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .dashboard-tabs {
+        gap: var(--spacing-xs);
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tab {
+        font-size: 0.8rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        flex: 1;
+        min-width: 80px;
+        text-align: center;
+    }
+
+    .chart-container {
+        height: 120px;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .dashboard-stats {
+        gap: var(--spacing-md);
+        justify-content: center;
+    }
+
+    .stat {
+        flex: 1;
+        min-width: 100px;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+    }
+
+    .stat-value {
+        font-size: 1rem;
     }
 
     .features-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .feature-card {
+        padding: var(--spacing-lg);
     }
 
     .pricing-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .pricing-card {
+        padding: var(--spacing-lg);
+    }
+
+    .pricing-card.popular {
+        transform: none;
+    }
+
+    .pricing-toggle {
+        flex-direction: column;
+        gap: var(--spacing-sm);
     }
 
     .testimonials-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .testimonial-card {
+        padding: var(--spacing-lg);
+    }
+
+    .steps-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .step-card {
+        padding: var(--spacing-md);
     }
 
     .footer-content {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
+        text-align: center;
     }
 
     .footer-links {
@@ -1443,19 +1633,40 @@ section {
         text-align: center;
     }
 
-    .bot-access-content {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-xl);
-        text-align: center;
-    }
-
     .modal-content {
         width: 95%;
         margin: var(--spacing-sm);
+        max-height: 90vh;
     }
 
     .modal-footer {
         flex-direction: column;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .bot-features {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .bot-feature {
+        padding: var(--spacing-md);
+    }
+
+    .preview-buttons {
+        gap: var(--spacing-sm);
+    }
+
+    .preview-btn {
+        padding: var(--spacing-md);
+        font-size: 1rem;
     }
 }
 
@@ -1464,17 +1675,400 @@ section {
         padding: 0 var(--spacing-sm);
     }
 
+    .nav-container {
+        padding: var(--spacing-sm);
+    }
+
+    .nav-logo {
+        font-size: 1.2rem;
+    }
+
+    .nav-logo-img {
+        width: 32px;
+        height: 32px;
+    }
+
+    /* Hero Section Small Mobile Improvements */
+    .hero {
+        padding-top: 70px;
+        min-height: 90vh;
+    }
+
+    .hero-content {
+        padding: var(--spacing-md) var(--spacing-sm);
+        gap: var(--spacing-md);
+        max-width: 100%;
+    }
+
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.4;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .hero-actions {
+        gap: var(--spacing-sm);
+    }
+
+    .hero-actions .btn-primary {
+        max-width: 100%;
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 1rem;
+        min-height: 45px;
+    }
+
+    .trading-dashboard {
+        max-width: 280px;
+        padding: var(--spacing-sm);
+        transform: scale(0.9);
+    }
+
+    .dashboard-tabs {
+        gap: var(--spacing-xs);
+    }
+
+    .tab {
+        font-size: 0.7rem;
+        padding: var(--spacing-xs);
+        min-width: 70px;
+    }
+
+    .chart-container {
+        height: 100px;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .dashboard-stats {
+        gap: var(--spacing-sm);
+    }
+
+    .stat {
+        min-width: 80px;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+    }
+
+    .stat-value {
+        font-size: 0.9rem;
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.3;
+    }
+
+    .section-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .feature-card {
+        padding: var(--spacing-md);
+    }
+
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .feature-icon i {
+        font-size: 1.2rem;
+    }
+
+    .feature-title {
+        font-size: 1.1rem;
+    }
+
+    .feature-description {
+        font-size: 0.9rem;
+    }
+
+    .pricing-card {
+        padding: var(--spacing-md);
+    }
+
+    .plan-name {
+        font-size: 1.3rem;
+    }
+
+    .amount {
+        font-size: 2.5rem;
+    }
+
+    .plan-features li {
+        font-size: 0.9rem;
+        padding: var(--spacing-xs) 0;
+    }
+
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .step-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .step-icon i {
+        font-size: 1.5rem;
+    }
+
+    .step-title {
+        font-size: 1.1rem;
+    }
+
+    .step-description {
+        font-size: 0.9rem;
+    }
+
+    .testimonial-card {
+        padding: var(--spacing-md);
+    }
+
+    .testimonial-text {
+        font-size: 1rem;
+    }
+
+    .faq-question {
+        padding: var(--spacing-md);
+        font-size: 1rem;
+    }
+
+    .faq-answer {
+        padding: 0 var(--spacing-md) var(--spacing-md);
+        font-size: 0.9rem;
     }
 
     .btn-primary, .btn-secondary, .btn-outline {
         padding: var(--spacing-sm) var(--spacing-md);
         font-size: 0.9rem;
+    }
+
+    .btn-large {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 1rem;
+    }
+
+    .bot-icon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .bot-icon i {
+        font-size: 2.5rem;
+    }
+
+    .bot-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .bot-info p {
+        font-size: 1rem;
+    }
+
+    .preview-message {
+        padding: var(--spacing-md);
+    }
+
+    .message-content p {
+        font-size: 0.9rem;
+    }
+
+    .preview-btn {
+        font-size: 0.9rem;
+        padding: var(--spacing-sm);
+    }
+
+    .free-trial-banner,
+    .bot-link-banner {
+        font-size: 0.8rem;
+        padding: var(--spacing-sm);
+    }
+
+    .bot-contact-note {
+        font-size: 0.7rem;
+        padding: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 1.6rem;
+        line-height: 1.4;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .hero-content {
+        padding: var(--spacing-sm);
+        gap: var(--spacing-sm);
+    }
+
+    .hero-actions .btn-primary {
+        padding: var(--spacing-sm);
+        font-size: 0.9rem;
+        min-height: 40px;
+    }
+
+    .trading-dashboard {
+        max-width: 260px;
+        padding: var(--spacing-sm);
+        transform: scale(0.85);
+    }
+
+    .dashboard-tabs {
+        gap: 2px;
+    }
+
+    .tab {
+        font-size: 0.65rem;
+        padding: 4px 6px;
+        min-width: 60px;
+    }
+
+    .chart-container {
+        height: 80px;
+    }
+
+    .dashboard-stats {
+        gap: var(--spacing-xs);
+    }
+
+    .stat {
+        min-width: 70px;
+    }
+
+    .stat-label {
+        font-size: 0.55rem;
+    }
+
+    .stat-value {
+        font-size: 0.8rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+        line-height: 1.3;
+    }
+
+    .feature-card,
+    .pricing-card,
+    .testimonial-card {
+        padding: var(--spacing-sm);
+    }
+
+    .btn-primary, .btn-secondary, .btn-outline {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.8rem;
+        min-height: 40px;
+    }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        min-height: 70vh;
+        padding-top: 80px;
+    }
+
+    .hero-content {
+        gap: var(--spacing-lg);
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .nav-menu {
+        max-height: 60vh;
+    }
+}
+
+/* Mobile-specific hero background optimizations */
+@media (max-width: 768px) {
+    .hero-grid {
+        background-size: 30px 30px;
+        animation-duration: 30s;
+    }
+
+    .hero-particles {
+        opacity: 0.05;
+        animation-duration: 20s;
+    }
+
+    .hero-background {
+        filter: blur(0.5px);
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-grid {
+        background-size: 20px 20px;
+        animation-duration: 40s;
+    }
+
+    .hero-particles {
+        opacity: 0.03;
+        animation-duration: 25s;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hero-grid {
+        background-size: 25px 25px;
+    }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Colors are already optimized for dark mode */
+    }
+}
+
+/* Print styles */
+@media print {
+    .navigation,
+    .hero-actions,
+    .pricing-toggle,
+    .footer {
+        display: none !important;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: var(--spacing-lg) 0;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: left;
+    }
+
+    .section {
+        page-break-inside: avoid;
     }
 }
 
@@ -1512,6 +2106,133 @@ button:focus,
 a:focus {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
+}
+
+/* Mobile Touch Improvements */
+@media (max-width: 768px) {
+    /* Improve touch targets */
+    .nav-item,
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline,
+    .faq-question,
+    .toggle-switch,
+    .preview-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Better touch feedback */
+    .nav-item:active,
+    .btn-primary:active,
+    .btn-secondary:active,
+    .btn-outline:active,
+    .faq-question:active,
+    .toggle-switch:active,
+    .preview-btn:active {
+        transform: scale(0.98);
+    }
+
+    /* Improve scrolling performance */
+    .nav-menu {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Better button spacing for touch */
+    .hero-actions {
+        gap: var(--spacing-md);
+    }
+
+    .hero-actions .btn-primary {
+        min-height: 50px;
+        font-size: 1.1rem;
+    }
+
+    /* Improve pricing toggle for touch */
+    .toggle-switch {
+        min-height: 44px;
+        min-width: 60px;
+    }
+
+    .toggle-slider {
+        transition: transform 0.2s ease;
+    }
+
+    /* Better FAQ interaction */
+    .faq-question {
+        min-height: 60px;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+
+    .faq-question i {
+        transition: transform 0.2s ease;
+    }
+
+    .faq-question.active i {
+        transform: rotate(180deg);
+    }
+
+    /* Improve card interactions */
+    .feature-card,
+    .pricing-card,
+    .testimonial-card,
+    .step-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .feature-card:active,
+    .pricing-card:active,
+    .testimonial-card:active,
+    .step-card:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Prevent text selection on interactive elements */
+.nav-item,
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.faq-question,
+.toggle-switch,
+.preview-btn {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Improve loading states for mobile */
+@media (max-width: 768px) {
+    .loading-spinner {
+        padding: var(--spacing-lg);
+    }
+
+    .spinner {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Better modal handling on mobile */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: var(--spacing-sm);
+        border-radius: var(--radius-md);
+    }
+
+    .modal-header {
+        padding: var(--spacing-md);
+    }
+
+    .modal-body {
+        padding: var(--spacing-md);
+    }
+
+    .modal-footer {
+        padding: var(--spacing-md);
+        gap: var(--spacing-sm);
+    }
 }
 
 /* Animation Classes */
